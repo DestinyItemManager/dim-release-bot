@@ -3,8 +3,13 @@
 git config --global user.email "release@destinyitemmanager.com"
 git config --global user.name "DIM Release Bot"
 
+# Decrypt SSH key
+openssl aes-256-cbc -K $encrypted_3184b4fb5b91_key -iv $encrypted_3184b4fb5b91_iv -in id_rsa.enc -out DIM/config/dim_travis.rsa -d
+chmod 600 DIM/config/dim_travis.rsa
+echo -e "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile $PWD/DIM/config/dim_travis.rsa\n" >> ~/.ssh/config
+
 # Clone project
-git clone https://${GH_TOKEN}@github.com/DestinyItemManager/DIM.git -b dev --depth 1
+git clone git@github.com:DestinyItemManager/DIM.git -b dev --depth 1
 
 cd DIM
 
