@@ -1,6 +1,6 @@
 #!/bin/sh -exu
 
-git config --global user.email "release@destinyitemmanager.com"
+git config --global user.email "destinyitemmanager@gmail.com"
 git config --global user.name "DIM Release Bot"
 
 # Decrypt SSH key
