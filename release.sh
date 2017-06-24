@@ -11,7 +11,7 @@ echo "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/
 # Clone project
 git clone git@github.com:DestinyItemManager/DIM.git -b dev --depth 1
 
-cp ~/.ssh/dim_travis DIM/config
+cp ~/.ssh/dim_travis.rsa DIM/config
 
 cd DIM
 
