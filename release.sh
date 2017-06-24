@@ -43,7 +43,7 @@ git commit --amend --no-edit
 
 # build and release using SSH keys
 npm install
-npm run publish_release
+npm run publish-release
 
 # push tags and changes
 git push --tags origin dev:dev
