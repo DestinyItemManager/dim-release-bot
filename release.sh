@@ -12,17 +12,24 @@ echo "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/
 git clone git@github.com:DestinyItemManager/DIM.git -b dev --depth 1
 
 cp ~/.ssh/dim_travis.rsa DIM/config
+cp id_rsa.pub DIM/config/dim_travis.rsa.pub
 
 cd DIM
 
 # bump version (creates tag and version commit)
-VERSION=$(npm version minor | sed 's/^v//')
 
-CHANGES_HTML=$(perl -0777 -ne'print "$1\n" if /# Next\n*(.*?)\n{2,}/ms' CHANGELOG.md | perl -pe's/^\* /<li>/;s/$/<\/li>/;')
+if [ -e PATCH ]
+then
+    git rm PATCH
+    VERSION=$(npm version patch | sed 's/^v//')
+else
+    VERSION=$(npm version minor | sed 's/^v//')
 
-# Build the changelog toaster
-# TODO: Add a sigil to changes so we can filter them down for this.
-echo "<div>
+    # Build the changelog toaster
+    # TODO: Add a sigil to changes so we can filter them down for this.
+    CHANGES_HTML=$(perl -0777 -ne'print "$1\n" if /# Next\n*(.*?)\n{2,}/ms' CHANGELOG.md | perl -pe's/^\* /<li>/;s/$/<\/li>/;')
+
+    echo "<div>
   <p>v$VERSION</p>
   <ul class=\"changelog-toaster\">
 $CHANGES_HTML
@@ -33,6 +40,7 @@ $CHANGES_HTML
   <a style=\"margin: 0 5px;\" href=\"http://twitter.com/ThisIsDIM\" target=\"_blank\"><i class=\"fa fa-twitter fa-2x\"></i></a></p>
 </div>
 " > src/views/changelog-toaster-release.html
+fi
 
 # update changelog
 perl -i'' -pe"s/^# Next/# Next\n\n# $VERSION/" CHANGELOG.md
