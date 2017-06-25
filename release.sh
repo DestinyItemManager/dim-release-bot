@@ -11,9 +11,6 @@ echo "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/
 # Clone project
 git clone git@github.com:DestinyItemManager/DIM.git -b dev --depth 1
 
-cp ~/.ssh/dim_travis.rsa DIM/config
-cp id_rsa.pub DIM/config/dim_travis.rsa.pub
-
 cd DIM
 
 # bump version (creates tag and version commit)
@@ -48,6 +45,10 @@ perl -i'' -pe"s/^# Next/# Next\n\n# $VERSION/" CHANGELOG.md
 # Add these other changes to the version commit
 git add -u
 git commit --amend --no-edit
+
+# Set up SSH keys for rsync
+cp ~/.ssh/dim_travis.rsa config
+cp ../id_rsa.pub config/dim_travis.rsa.pub
 
 # build and release using SSH keys
 npm install
