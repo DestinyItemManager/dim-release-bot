@@ -20,8 +20,8 @@ cd DIM
 
 if [ -e PATCH ]
 then
-    git rm PATCH
     VERSION=$(npm version patch | sed 's/^v//')
+    git rm PATCH
 else
     VERSION=$(npm version minor | sed 's/^v//')
 
