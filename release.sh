@@ -17,10 +17,10 @@ cd DIM
 
 if [ -e PATCH ]
 then
-    VERSION=$(npm version patch | sed 's/^v//')
+    VERSION=$(npm --no-git-tag-version version patch | sed 's/^v//')
     git rm PATCH
 else
-    VERSION=$(npm version minor | sed 's/^v//')
+    VERSION=$(npm --no-git-tag-version version minor | sed 's/^v//')
 
     # Build the changelog toaster
     # TODO: Add a sigil to changes so we can filter them down for this.
@@ -44,7 +44,8 @@ perl -i'' -pe"s/^# Next/# Next\n\n# $VERSION/" CHANGELOG.md
 
 # Add these other changes to the version commit
 git add -u
-git commit --amend --no-edit
+git commit -m"$VERSION"
+git tag "v$VERSION"
 
 # Set up SSH keys for rsync
 cp ~/.ssh/dim_travis.rsa config
