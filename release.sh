@@ -9,7 +9,7 @@ chmod 600 ~/.ssh/dim_travis.rsa
 echo "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/dim_travis.rsa\n" >> ~/.ssh/config
 
 # Clone project
-git clone git@github.com:DestinyItemManager/DIM.git -b dev --depth 1
+git clone git@github.com:DestinyItemManager/DIM.git -b master --depth 1
 
 cd DIM
 
@@ -31,7 +31,7 @@ else
   <ul class=\"changelog-toaster\">
 $CHANGES_HTML
   </ul>
-  <p>View the <a href=\"https://github.com/DestinyItemManager/DIM/blob/dev/CHANGELOG.md\" target=\"_blank\">changelog</a> for
+  <p>View the <a href=\"https://github.com/DestinyItemManager/DIM/blob/master/CHANGELOG.md\" target=\"_blank\">changelog</a> for
     the full history.</p>
   <p>Follow us on: <a style=\"margin: 0 5px;\" href=\"http://destinyitemmanager.reddit.com\" target=\"_blank\"><i class=\"fa fa-reddit fa-2x\"></i></a>
   <a style=\"margin: 0 5px;\" href=\"http://twitter.com/ThisIsDIM\" target=\"_blank\"><i class=\"fa fa-twitter fa-2x\"></i></a></p>
@@ -56,4 +56,4 @@ npm install
 npm run publish-release
 
 # push tags and changes
-git push --tags origin dev:dev
+git push --tags origin master:master
