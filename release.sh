@@ -31,9 +31,9 @@ else
   <ul class=\"changelog-toaster\">
 $CHANGES_HTML
   </ul>
-  <p>View the <a href=\"https://github.com/DestinyItemManager/DIM/blob/master/CHANGELOG.md\" target=\"_blank\">changelog</a> for
+  <p>View the <a href=\"https://github.com/DestinyItemManager/DIM/blob/master/CHANGELOG.md\" target=\"_blank\" rel=\"noopener noreferrer\">changelog</a> for
     the full history.</p>
-  <p>Follow us on: <a style=\"margin: 0 5px;\" href=\"http://destinyitemmanager.reddit.com\" target=\"_blank\"><i class=\"fa fa-reddit fa-2x\"></i></a>
+  <p>Follow us on: <a style=\"margin: 0 5px;\" href=\"http://destinyitemmanager.reddit.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i class=\"fa fa-reddit fa-2x\"></i></a>
   <a style=\"margin: 0 5px;\" href=\"http://twitter.com/ThisIsDIM\" target=\"_blank\"><i class=\"fa fa-twitter fa-2x\"></i></a></p>
 </div>
 " > src/views/changelog-toaster-release.html
