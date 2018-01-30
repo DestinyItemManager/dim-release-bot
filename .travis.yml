@@ -1,14 +1,4 @@
 language: node_js
-node_js:
-- '7'
+node_js: node
 sudo: false
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
-env:
-  - CXX=g++-4.8
 script: ./release.sh
