@@ -40,7 +40,7 @@ $CHANGES_HTML
 fi
 
 # update changelog
-perl -i'' -pe"s/^# Next/# Next\n\n# $VERSION/" docs/CHANGELOG.md
+perl -i'' -pe"s/^# Next/# Next\n\n# $VERSION ($(TZ="America/Los_Angeles" date +"%Y-%m-%d"))/" docs/CHANGELOG.md
 
 # Add these other changes to the version commit
 git add -u
