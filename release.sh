@@ -52,8 +52,8 @@ cp ~/.ssh/dim_travis.rsa config
 cp ../id_rsa.pub config/dim_travis.rsa.pub
 
 # build and release using SSH keys
-npm install
-npm run publish-release
+yarn install
+yarn run publish-release
 
 # push tags and changes
 git push --tags origin master:master
