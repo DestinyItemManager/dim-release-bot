@@ -2,11 +2,10 @@ language: node_js
 node_js: 10
 sudo: false
 cache: yarn
+env:
+  global:
+    - YARN_VERSION="1.12.3"
+before_script: 
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+  - export PATH="$HOME/.yarn/bin:$PATH"
 script: ./release.sh
-addons:
-  apt:
-    sources:
-      - sourceline: 'deb https://dl.yarnpkg.com/debian/ stable main'
-        key_url: 'https://dl.yarnpkg.com/debian/pubkey.gpg'
-    packages:
-      - yarn
