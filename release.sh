@@ -21,22 +21,6 @@ then
     git rm PATCH
 else
     VERSION=$(npm --no-git-tag-version version minor | sed 's/^v//')
-
-    # Build the changelog toaster
-    # TODO: Add a sigil to changes so we can filter them down for this.
-    CHANGES_HTML=$(perl -0777 -ne'print "$1\n" if /# Next\n*(.*?)\n{2,}/ms' docs/CHANGELOG.md | perl -pe's/^\* /<li>/;s/$/<\/li>/;')
-
-    echo "<div>
-  <p>v$VERSION</p>
-  <ul class=\"changelog-toaster\">
-$CHANGES_HTML
-  </ul>
-  <p>View the <a href=\"https://github.com/DestinyItemManager/DIM/blob/master/docs/CHANGELOG.md\" target=\"_blank\" rel=\"noopener noreferrer\">changelog</a> for
-    the full history.</p>
-  <p>Follow us on: <a style=\"margin: 0 5px;\" href=\"http://destinyitemmanager.reddit.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i class=\"fa fa-reddit fa-2x\"></i></a>
-  <a style=\"margin: 0 5px;\" href=\"http://twitter.com/ThisIsDIM\" target=\"_blank\"><i class=\"fa fa-twitter fa-2x\"></i></a></p>
-</div>
-" > src/views/changelog-toaster-release.html
 fi
 
 # update changelog
