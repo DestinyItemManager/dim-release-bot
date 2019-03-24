@@ -23,7 +23,7 @@ else
     VERSION=$(npm --no-git-tag-version version minor | sed 's/^v//')
 fi
 
-NEW_CHANGES=$(perl -0777 -ne'print "$1\n" if /# Next\n*(.*?)\n{2,}/ms' docs/CHANGELOG.md)
+NEW_CHANGES=$(perl -0777 -ne'print "$1\\n" if /# Next\n*(.*?)\n{2,}/ms' docs/CHANGELOG.md | perl -e 'while(<>) { $_ =~ s/[\r\n]/\\n/g; print "$_" }' )
 
 # update changelog
 perl -i'' -pe"s/^# Next/# Next\n\n# $VERSION ($(TZ="America/Los_Angeles" date +"%Y-%m-%d"))/" docs/CHANGELOG.md
@@ -45,6 +45,6 @@ yarn run publish-release
 git push --tags origin master:master
 
 # publish a release on GitHub
-API_JSON=$(printf '{"tag_name": "v%s","name": "%s","body": "%s","draft": false,"prerelease": false}' $VERSION $VERSION $NEW_CHANGES)
+API_JSON=$(printf '{"tag_name": "v%s","name": "%s","body": "%s","draft": false,"prerelease": false}' "$VERSION" "$VERSION" "$NEW_CHANGES")
 curl --data "$API_JSON" "https://api.github.com/repos/DestinyItemManager/DIM/releases?access_token=$GITHUB_ACCESS_TOKEN"
 
