@@ -24,6 +24,7 @@ else
 fi
 
 NEW_CHANGES=$(perl -0777 -ne'print "$1\\n" if /## Next\n*(.*?)\n{2,}/ms' docs/CHANGELOG.md | perl -e 'while(<>) { $_ =~ s/[\r\n]/\\n/g; print "$_" }' )
+echo $NEW_CHANGES > release-notes.txt
 
 # update changelog
 OPENSPAN='<span className="changelog-date">'
@@ -47,8 +48,7 @@ yarn run publish-release
 git push --tags origin master:master
 
 # publish a release on GitHub
-API_JSON=$(printf '{"tag_name": "v%s","name": "%s","body": "%s","draft": false,"prerelease": false}' "$VERSION" "$VERSION" "$NEW_CHANGES")
-curl --data "$API_JSON" "https://api.github.com/repos/DestinyItemManager/DIM/releases?access_token=$GITHUB_ACCESS_TOKEN"
+hub release create -c -F release-notes.txt v$VERSION
 
 curl -X POST "https://api.cloudflare.com/client/v4/zones/2c34c69276ed0f6eb2b9e1518fe56f74/purge_cache" \
      -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
