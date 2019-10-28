@@ -23,13 +23,13 @@ else
     VERSION=$(npm --no-git-tag-version version minor | sed 's/^v//')
 fi
 
-NEW_CHANGES=$(perl -0777 -ne'print "$1\\n" if /## Next\n*(.*?)\n{2,}/ms' docs/CHANGELOG.md | perl -e 'while(<>) { $_ =~ s/[\r\n]/\\n/g; print "$_" }' )
-echo $NEW_CHANGES > release-notes.txt
+awk '/## Next/{flag=1;next}/##/{flag=0}flag' docs/CHANGELOG.md > release-notes.txt
 
 # update changelog
 OPENSPAN='<span className="changelog-date">'
 CLOSESPAN='</span>'
-perl -i'' -pe"s/^## Next/## Next\n\n## $VERSION $OPENSPAN($(TZ="America/Los_Angeles" date +"%Y-%m-%d"))$CLOSESPAN/" docs/CHANGELOG.md
+DATE=$(TZ="America/Los_Angeles" date +"%Y-%m-%d")
+perl -i'' -pe"s/^## Next/## Next\n\n## $VERSION $OPENSPAN($DATE)$CLOSESPAN/" docs/CHANGELOG.md
 
 # Add these other changes to the version commit
 git add -u
