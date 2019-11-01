@@ -23,10 +23,13 @@ else
     VERSION=$(npm --no-git-tag-version version minor | sed 's/^v//')
 fi
 
-NEW_CHANGES=$(perl -0777 -ne'print "$1\\n" if /# Next\n*(.*?)\n{2,}/ms' docs/CHANGELOG.md | perl -e 'while(<>) { $_ =~ s/[\r\n]/\\n/g; print "$_" }' )
+awk '/## Next/{flag=1;next}/##/{flag=0}flag' docs/CHANGELOG.md > release-notes.txt
 
 # update changelog
-perl -i'' -pe"s/^# Next/# Next\n\n# $VERSION ($(TZ="America/Los_Angeles" date +"%Y-%m-%d"))/" docs/CHANGELOG.md
+OPENSPAN='<span className="changelog-date">'
+CLOSESPAN='</span>'
+DATE=$(TZ="America/Los_Angeles" date +"%Y-%m-%d")
+perl -i'' -pe"s/^## Next/## Next\n\n## $VERSION $OPENSPAN($DATE)$CLOSESPAN/" docs/CHANGELOG.md
 
 # Add these other changes to the version commit
 git add -u
@@ -45,8 +48,7 @@ yarn run publish-release
 git push --tags origin master:master
 
 # publish a release on GitHub
-API_JSON=$(printf '{"tag_name": "v%s","name": "%s","body": "%s","draft": false,"prerelease": false}' "$VERSION" "$VERSION" "$NEW_CHANGES")
-curl --data "$API_JSON" "https://api.github.com/repos/DestinyItemManager/DIM/releases?access_token=$GITHUB_ACCESS_TOKEN"
+hub release create -c -F release-notes.txt v$VERSION
 
 curl -X POST "https://api.cloudflare.com/client/v4/zones/2c34c69276ed0f6eb2b9e1518fe56f74/purge_cache" \
      -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
