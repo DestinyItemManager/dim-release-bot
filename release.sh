@@ -26,8 +26,8 @@ fi
 awk '/## Next/{flag=1;next}/##/{flag=0}flag' docs/CHANGELOG.md > release-notes.txt
 
 # update changelog
-OPENSPAN='<span className="changelog-date">'
-CLOSESPAN='</span>'
+OPENSPAN='\<span className="changelog-date"\>'
+CLOSESPAN='\<\/span\>'
 DATE=$(TZ="America/Los_Angeles" date +"%Y-%m-%d")
 perl -i'' -pe"s/^## Next/## Next\n\n## $VERSION $OPENSPAN($DATE)$CLOSESPAN/" docs/CHANGELOG.md
 
