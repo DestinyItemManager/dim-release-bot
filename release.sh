@@ -1,5 +1,7 @@
 #!/bin/sh -exu
 
+GITHUB_TOKEN=$GITHUB_ACCESS_TOKEN
+
 git config --global user.email "destinyitemmanager@gmail.com"
 git config --global user.name "DIM Release Bot"
 
