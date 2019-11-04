@@ -1,7 +1,5 @@
 #!/bin/sh -exu
 
-GITHUB_TOKEN=$GITHUB_ACCESS_TOKEN
-
 git config --global user.email "destinyitemmanager@gmail.com"
 git config --global user.name "DIM Release Bot"
 
@@ -46,14 +44,16 @@ cp ../id_rsa.pub config/dim_travis.rsa.pub
 yarn install
 yarn run publish-release
 
-# push tags and changes
-git push --tags origin master:master
-
-# publish a release on GitHub
-hub release create -c -F release-notes.txt v$VERSION
-
+# Purge the cache in CloudFlare for long-lived files
 curl -X POST "https://api.cloudflare.com/client/v4/zones/2c34c69276ed0f6eb2b9e1518fe56f74/purge_cache" \
      -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
      -H "X-Auth-Key: $CLOUDFLARE_KEY" \
      -H "Content-Type: application/json" \
      --data '{"files":["https://app.destinyitemmanager.com", "https://app.destinyitemmanager.com/index.html", "https://app.destinyitemmanager.com/version.json", "https://app.destinyitemmanager.com/service-worker.js", "https://app.destinyitemmanager.com/gdrive-return.html", "https://app.destinyitemmanager.com/return.html", "https://app.destinyitemmanager.com/manifest-webapp-6-2018.json", "https://app.destinyitemmanager.com/manifest-webapp-6-2018-ios.json"]}'
+
+# push tags and changes
+git push --tags origin master:master
+
+# publish a release on GitHub
+GITHUB_TOKEN=$GITHUB_ACCESS_TOKEN hub release create -c -F release-notes.txt "v$VERSION"
+
