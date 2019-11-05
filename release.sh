@@ -23,7 +23,8 @@ else
     VERSION=$(npm --no-git-tag-version version minor | sed 's/^v//')
 fi
 
-awk '/## Next/{flag=1;next}/##/{flag=0}flag' docs/CHANGELOG.md > release-notes.txt
+echo $VERSION > release-notes.txt
+awk '/## Next/{flag=1;next}/##/{flag=0}flag' docs/CHANGELOG.md >> release-notes.txt
 
 # update changelog
 OPENSPAN='\<span className="changelog-date"\>'
