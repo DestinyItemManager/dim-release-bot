@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/DestinyItemManager/dim-release-bot.svg?branch=master)](https://travis-ci.org/DestinyItemManager/dim-release-bot)
+[![Build Status](https://travis-ci.com/DestinyItemManager/dim-release-bot.svg?branch=master)](https://travis-ci.com/DestinyItemManager/dim-release-bot)
 
 ## DIM Release Bot
 
